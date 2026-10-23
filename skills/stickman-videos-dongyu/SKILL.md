@@ -1,6 +1,6 @@
 ---
 name: stickman-videos-dongyu
-description: "Use stickman-videos-dongyu (Dongyu) when turning copy, notes, articles, or topics into customizable-length English stick-figure videos (in 10-second multiples: 30s, 60s, 3min, 5min, default 60s), kinetic line-animation explainers, motivational shorts, or Gemini Omni Flash prompt packages. After Setup, independently lock cast with a copy-ready character prompt (text only, no image yet); then Phase A (English VO + reference translation); Phase B stays visuals-only (no spoken audio)."
+description: "Use stickman-videos-dongyu (Dongyu) when turning copy, notes, articles, or topics into customizable-length English stick-figure videos in Style 2B only (Modern Beanie / Cinematic Story: solid-white-head beanie figure in full-color cinematic narrative environments). Durations are 10-second multiples (30s, 60s, 3min, 5min, default 60s). After Setup: costume fill-in (hat + top only) → copy-ready character prompt (no image yet) → Phase A (English VO + reference translation) → Phase B visuals-only (no spoken audio)."
 ---
 
 # Stickman Videos Dongyu
@@ -9,8 +9,11 @@ description: "Use stickman-videos-dongyu (Dongyu) when turning copy, notes, arti
 
 Turn one source into a confirmed director's proposal and then N standalone prompts for approximately ten-second Gemini Omni Flash clips (where N = target duration in seconds / 10; default 6 clips for 60 seconds). Preserve the source's meaning while structuring it through a high-completion 5-stage emotional narrative arc.
 
+**Visual style (locked):** this fork supports **only Style 2B (Modern Beanie / Cinematic Story)**. Character = Style 2 Modern Beanie figure (solid opaque white circular head, red beanie, yellow t-shirt defaults, black stick limbs) inside **full-color cinematic narrative environments** with cinematic lighting and depth. If the user asks for Style 1, 2A, 3, 4, or 5, say this fork only supports Style 2B and continue with 2B.
+
 **Default audio / copy / character policy (this fork):**
-- **Character lock (this fork, between Setup and Phase A):** after Setup is complete, produce a **copy-ready character prompt** (one pasteable English block that locks the cast look for image/video tools). This step is **independent of Phase A**—do not bury the character prompt inside the Phase A proposal. **Do not generate a character image in this step** (image lock comes later when asked). Stop for user approval of the **copyable prompt only** before Phase A.
+- **Costume fill-in (this fork, after Setup, before character prompt):** present a short **outfit-only fill-in** (defaults pre-filled). User may change **only hat and top**; head, face, neck, body grammar, proportions, limbs, hands, shorts, and feet stay fixed. Stop until the user confirms or edits the blanks. Then proceed to the character prompt.
+- **Character lock (this fork, after costume fill-in, before Phase A):** produce a **copy-ready character prompt** (one pasteable English block) that applies the **confirmed costume** onto the fixed non-costume look. Independent of Phase A—do not bury it inside Phase A. **Do not generate a character image** here. Stop for approval of the **copyable prompt** before Phase A.
 - **Phase A (like upstream):** include the full **English VO / 旁白文案 as plain text**, with a reference translation in the user's language, scaled to ~20–25 English words per 10-second clip. Use the **already-approved** character prompt as the visual cast; do not redesign the character here.
 - **Phase B (this fork):** generation prompts stay **visuals-only / mute speech**. Do **not** put spoken VO lines, narrator voice profiles, lip-sync speech, dialogue, or dubbing into Omni Flash prompts unless the user explicitly asks to restore voiceover into generation (then apply `references/voice-continuity.md`).
 - Optional ambient BGM/SFX for picture rhythm is allowed in prompts; spoken words are not (by default). Narration text approved in Phase A is for humans / later post-production VO, not for the video model by default.
@@ -23,42 +26,38 @@ Require these before planning:
 - source material
 - aspect ratio: `16:9` or `9:16`
 - target duration: in multiples of 10 seconds (e.g. `30s`, `60s`, `90s`, `3min`, `5min`; default: `60s` / 6 clips if unspecified)
-- visual style and theme:
-  - `Style 1 (Classic Minimalist)`: light (white background, black figure) or dark (black background, white figure)
-  - `Style 2 (Modern Beanie Zeke)`:
-    - `Style 2A (Modern Studio Tech)`: pure white high-key studio, subtle light-gray perspective grid, floating cyan/blue glass UI
-    - `Style 2B (Cinematic Story)`: full-color narrative environments, cinematic lighting & depth
-  - `Style 3 (Prehistoric Hand-Drawn / Dark Comedy)`: expressive white filled heads, black stick limbs, animal-hide costumes and earthy prehistoric settings; story-specific casting
-  - `Style 4 (Cozy Storytelling / 治愈故事风)`: expressive minimalist white-filled characters with dark stick limbs in full-color 2D cartoon environments; varied story locations and cinematic shot changes
-  - `Style 5 (Historical Cartoon / 历史卡通风)`: white-filled round heads, simple black oval eyes and thin black stick limbs in era-specific costume, with cel shading and full-color painterly historical settings
 
-If aspect ratio or visual style is missing, ask for all missing items in one concise message and stop. If duration is omitted, default to 60 seconds (6 clips). If a user provides a duration not divisible by 10, round to the nearest 10-second multiple. If a user specifies only light or dark theme, default to Style 1. Never select an aspect ratio or style silently. Do not re-ask choices already supplied.
+**Visual style is fixed to Style 2B (Cinematic Story)** — do **not** ask for a style menu or offer Styles 1, 2A, 3, 4, or 5. State once that the visual style is locked to Style 2B (Modern Beanie figure in full-color cinematic narrative environments). If the user requests another style, reply that this fork only supports Style 2B and proceed with 2B.
+
+If aspect ratio is missing, ask for all missing items (source / aspect ratio / duration as needed) in one concise message and stop. If duration is omitted, default to 60 seconds (6 clips). If a user provides a duration not divisible by 10, round to the nearest 10-second multiple. Never select an aspect ratio silently. Do not re-ask choices already supplied.
 
 Urgency, generation cost, client pressure, and requests to "pick normal settings" do not waive this gate.
 
 ## Workflow
 
-1. **Character lock (between Setup and Phase A — independent step; copy-ready prompt only):**
-   - After Setup is complete, output a **single copy-ready character prompt** (English, one fenced code block the user can paste as-is into an image or video tool). Lock roles + look from the chosen style (Style 2 default: solid opaque white circular head, red beanie, yellow tee, black stick limbs/shorts, simple cartoon expression; short chibi proportions). Do **not** write Phase A storyboard or VO here.
-   - Format: one contiguous prompt paragraph (or short labeled blocks if multiple cast members), **no** prose commentary inside the copy block. A one-line label outside the fence is fine (e.g. "角色提示词（可复制）").
+1. **Costume fill-in (after Setup, before character prompt — hat + top only):**
+   - Present a **fill-in form** with only two editable fields. User may change **帽子 and 上衣 only**; do not ask to redesign head, face, neck, proportions, limbs, hands, shorts, or feet.
+   - **Editable blanks** (defaults pre-filled; user may overwrite or reply「默认」):
+     - 帽子 / Headwear: `bright red beanie (smooth rounded knit, no pom-pom)`
+     - 上衣 / Top: `yellow short-sleeve t-shirt`
+   - **Locked (never offer as blanks):** 下装 `black shorts`, 脚 `simple oval feet`, 手 `slightly flattened solid black oval palm hands`, body proportions (slightly smaller head, opaque solid white cylindrical neck, slightly longer legs).
+   - Fixed non-costume look (not editable in this step): slightly smaller solid opaque white circular head, short opaque solid white cylindrical neck fused seamlessly to the head (same continuous white as the face, no gap, thin black outline), simple black-dot eyes + simple cartoon mouth, black stick arms, slightly longer black stick legs (not chibi), slightly flattened solid black oval palm hands (no separate fingers), black shorts, simple oval feet.
+   - State clearly: 本步只能改帽子和上衣，其余保持不变. **Stop** until the user confirms or returns filled blanks. Do **not** emit the character prompt or Phase A yet.
+2. **Character lock (after costume confirm, before Phase A — copy-ready prompt only):**
+   - Output a **single copy-ready character prompt** (English, one fenced code block) that freezes the fixed non-costume look **plus the confirmed costume**. Style 2 fixed base: slightly smaller solid opaque white circular head, short opaque solid white cylindrical neck fused seamlessly to the head (same continuous white as the face, no gap, thin black outline), simple black-dot eyes + simple cartoon mouth, black stick arms, slightly longer black stick legs (not chibi), slightly flattened solid black oval palm hands (no separate fingers)—**swap only** the approved headwear and top into the prompt; keep default black shorts, oval feet, and flattened black oval palm hands.
+   - Format: one contiguous prompt paragraph (or short labeled blocks if multiple cast members), **no** prose inside the copy block. A one-line label outside the fence is fine (e.g. "角色提示词（可复制）").
    - **Do not** generate any character reference image in this step.
-   - Show the copyable prompt and **stop for explicit approval**. If rejected, revise the prompt text only; do **not** start Phase A until approved.
-   - Image generation / Flow reference wiring for this prompt comes later when the user asks—not in this step.
-2. Read `references/storyboard-template.md` and `references/style-catalog.md`. Using the **approved character prompt**, structure the narrative with the **5-Stage High-Completion Heartbeat Engine** and produce Phase A in the user's language **with English VO script text and a reference translation**. Reuse the locked character look; do not redesign cast. Do **not** require narrator voice casting for generation by default.
-3. Stop after the director's proposal and request explicit approval of Phase A (storyboard + VO/旁白文案).
-4. If the user changes ratio, duration, style, theme, narration, scene structure, or global direction, recompose Phase A and request approval again. If they change cast/look, return to step 1 (new **copy-ready character prompt** only) before a new Phase A.
-5. Only after the character lock **and** the current Phase A are approved, read `references/omni-flash-prompt-contract.md` and produce Phase B (**visual prompts only; mute speech by default**). Use the approved VO text to keep visual beats aligned—do **not** inject spoken VO into generation prompts unless voiceover-into-generation was restored.
-6. Use `references/examples.md` only when a concrete end-to-end example would resolve ambiguity. When citing examples for Phase B, strip their spoken voice blocks unless the user restored voiceover into generation.
+   - Show the copyable prompt and **stop for explicit approval**. If rejected, revise the prompt (and return to step 1 if they want a different outfit); do **not** start Phase A until approved.
+   - Image generation / Flow reference wiring comes later when the user asks—not in this step.
+3. Read `references/storyboard-template.md` and `references/style-catalog.md`. Using the **approved character prompt**, structure the narrative with the **5-Stage High-Completion Heartbeat Engine** and produce Phase A in the user's language **with English VO script text and a reference translation**. Place the Style 2 figure inside **full-color cinematic narrative environments (2B)**. Reuse the locked character look; do not redesign cast. Do **not** require narrator voice casting for generation by default.
+4. Stop after the director's proposal and request explicit approval of Phase A (storyboard + VO/旁白文案).
+5. If the user changes ratio, duration, narration, scene structure, or global direction, recompose Phase A and request approval again. Style remains 2B (do not offer other styles). If they change **hat/top only**, return to step 1 then regenerate step 2. If they change non-costume cast/look, return to step 1–2 as needed before a new Phase A.
+6. Only after the character lock **and** the current Phase A are approved, read `references/omni-flash-prompt-contract.md` and produce Phase B (**visual prompts only; mute speech by default**). Use the approved VO text to keep visual beats aligned—do **not** inject spoken VO into generation prompts unless voiceover-into-generation was restored. Every clip uses Style 2 character anchors inside 2B full-color cinematic settings.
+7. Use `references/examples.md` only when a concrete end-to-end example would resolve ambiguity. When citing examples for Phase B, strip their spoken voice blocks unless the user restored voiceover into generation. Prefer 2B/cinematic examples; ignore other-style branches.
 
-Topic approval, schedule pressure, or approval of an older draft is not approval of the current character lock or Phase A. Character-lock approval alone is not Phase A approval.
+Topic approval, schedule pressure, or approval of an older draft is not approval of costume, character lock, or Phase A. Costume confirm alone is not character-lock approval; character-lock approval alone is not Phase A approval.
 
 ## Output rules
-
-For Style 3, read `references/prehistoric-dark-comedy.md` before planning. Its casting, story rhythm, palette and continuity rules override the generic no-idle, device-count and five-stage discussion-ending rules below. Use setup → escalation → ironic payoff for narrative shorts; do not force a discussion question into a visual punchline. This is a visual storytelling style, not a claim about actual prehistory.
-
-For Style 4, read `references/cozy-storytelling.md` before planning and prompt assembly. Default each new ten-second segment to a different recognizable story setting, unless the user explicitly requests one location or approves a deliberate return. Preserve characters, drawing grammar, important props and movement direction—not an identical table or background across the whole video. Name the location cuts and any time jumps in Phase A. This is full-color cartoon storytelling, not a hand-drawn/sketchbook mode and not a claim of photorealistic 3D backgrounds.
-
-For Style 5, read `references/historical-cartoon.md` before planning and prompt assembly. Keep its drawing grammar fixed while changing the era pack. Confirm story-specific cast cards, setting, palette, props and **exact narration text** in Phase A; repeat the full approved style and visible cast descriptions in every Phase B prompt. Its historical palette, physical-action pacing and story ending override generic three-color, device-count, no-idle and discussion-ending rules below. Do not apply this style's character rules to Styles 1–4. Still omit spoken voice blocks from Phase B prompts under the default mute-generation policy.
 
 - Structure every script using the 5-stage high-completion flow:
   1. **Golden Hook**: Instant curiosity trigger via a counter-intuitive question or visual paradox. Timing is flexible based on duration (e.g. within the first 2–5 seconds in short videos, up to 10–15s in long videos); never open with generic platitudes.
@@ -70,21 +69,17 @@ For Style 5, read `references/historical-cartoon.md` before planning and prompt 
 - Phase B must **not** re-introduce spoken VO or narrator voice blocks into generation prompts. Carry on-screen action through timed visuals; optional post-production overlay notes may echo short phrases from the approved Phase A VO.
 - Give each clip three timed beats, at least four relevant visual devices, and a visual change every two to three seconds.
 - Keep character proportions, line weight, and style consistent across all clips.
-- For Style 1, freeze the concise character anchor from `references/style-catalog.md` and repeat it verbatim in every clip. Keep two arms and two legs, one current pose per limb, stable proportions and uniform medium line weight; a moving arm replaces its previous pose rather than adding another arm. Keep the figure monochrome and saturated accents on props/graphics. Do not replace the anchor with "same character", ellipses, numeric anatomy recipes, skeleton/path instructions or clip-specific appearance descriptions. Occasional simple line expressions are allowed; the head remains hollow. Keep rich actions and effects separate from character design. Treat generated consistency as a visual acceptance check, not a guarantee from repeated text.
-- For Style 1, limit the video to three saturated accent colors named with ordinary descriptive words (e.g. vivid red, electric blue, warm gold). For light theme, enforce a flat, digitally pure-white canvas with no textures, gradients, or 3D depth.
-- For Style 2 (Modern Beanie Zeke), enforce character consistency from `references/style-catalog.md`:
-  - Clip 1: `A minimalist 2D animated stick figure with a solid opaque white circular head (filled white face plate, thick black outline; never hollow, never transparent, never see-through), simple black-dot cartoon eyes and a simple black-line cartoon mouth that changes expression by clip, wearing a bright red beanie (smooth rounded knit, no pom-pom) and a yellow t-shirt, with simple black stick limbs and shorts, simple oval feet and three-fingered cartoon hands. Simple black lines, vibrant colors, smooth 2D animation style.`
-  - Clips 2–N: `The same minimalist 2D animated stick figure with the same solid opaque white circular head (filled white face, thick black outline; never hollow or transparent), bright red beanie and yellow shirt, black stick limbs and shorts... Simple black lines, vibrant colors, smooth 2D animation style.`
+- Enforce Style 2 character consistency from `references/style-catalog.md` (apply confirmed costume in place of default beanie/shirt/shorts when different):
+  - Clip 1: `A minimalist 2D animated stick figure with a slightly smaller solid opaque white circular head (filled white face plate, thick black outline; never hollow, never transparent, never see-through), with a short opaque solid white cylindrical neck fused seamlessly to the bottom of the head (same continuous filled white as the face plate flowing into the neck—no gap, no floating head, not a disconnected piece; not a stick line, not gray; thin black outline on the neck; neck clearly visible above the shirt collar—never head glued flat onto the shoulders without a neck), simple black-dot cartoon eyes and a simple black-line cartoon mouth that changes expression by clip, wearing a bright red beanie (smooth rounded knit, no pom-pom) and a yellow t-shirt, with simple black stick arms, black shorts, and slightly longer black stick legs (not chibi, not stubby), simple oval feet and slightly flattened solid black oval palm hands (soft pancake/disc palms—not round balls, no separate fingers). Simple black lines, vibrant colors, smooth 2D animation style.`
+  - Clips 2–N: `The same minimalist 2D animated stick figure with the same slightly smaller solid opaque white circular head (filled white face, thick black outline; never hollow or transparent), the same short opaque solid white cylindrical neck fused seamlessly to the head (same continuous white as the face, no gap, thin black outline), bright red beanie and yellow shirt, black stick arms, black shorts, and the same slightly longer black stick legs (not chibi)... Simple black lines, vibrant colors, smooth 2D animation style.`
   - **Solid opaque white circular head** (filled face, thick black outline)—never hollow or transparent.
   - **Every clip names a beat-matched simple cartoon expression** (dot/arc eyes + simple mouth shapes). No realistic pupils/irises/skin. Expression changes must not redesign head fill, beanie, shirt, or proportions.
-- For Style 2A (Modern Studio Tech), enforce: `in a modern bright white studio space with subtle light-gray perspective grid lines on the floor plane. High-key studio lighting, clean white negative space, sleek glowing cyan and electric blue glass holographic UI elements.` Always include negative constraint: `STRICTLY MINIMALIST, NO CIRCUIT BOARD TEXTURES, NO SCI-FI WALL PANELS, NO CRACKED CONCRETE.`
-- For Style 2B (Cinematic Story), specify full-color narrative setting and cinematic lighting while preserving the 2D animated stick-figure character design.
-- For Style 4, freeze each approved character's complete anchor and repeat it in every clip where that role appears. Separate static design from first-frame positions, timed prop transfers and final states; changing scene does not reset prop ownership. Read its reference for shot variety and visual acceptance checks.
-- For all styles, avoid abstract liquid/shape morphing. Drive motion with concrete character actions (leaping, touching glass, drawing luminous lines, opening doors) with timed beats across `[0–3s]`, `[3–7s]`, and `[7–10s]`. Never leave the character idle.
+- **Style 2B environment (required):** specify a rich full-color narrative setting and cinematic lighting/depth while preserving the 2D animated stick-figure character design. Do **not** use Style 2A studio-grid / cyan glass UI requirements.
+- Avoid abstract liquid/shape morphing. Drive motion with concrete character actions (leaping, touching objects, drawing luminous lines, opening doors, walking into depth) with timed beats across `[0–3s]`, `[3–7s]`, and `[7–10s]`. Never leave the character idle.
 - **Mute speech by default:** every Phase B prompt must forbid spoken dialogue, voiceover, narration, lip-sync speech, and on-screen speech bubbles. Do not include a narrator voice block. Optional ambient BGM/SFX may support mood; do not mix "voice-first" instructions.
 - Never place technical color notation (hex, RGB, Pantone) inside generation prompts.
 - Default generated clips to no visible words, letters, numbers, or interface copy. Put optional two-to-five-word overlays in a separate post-production note.
-- Match every clip ending to the next clip opening through action, an important prop, screen direction or a planned cut. Style 4 uses deliberate scene changes or approved time jumps; it does not require the same background in adjacent clips.
+- Match every clip ending to the next clip opening through action, an important prop, screen direction or a planned cut.
 - Do not invent unsupported facts, statistics, quotations, or product claims.
 
 ## Revision rules
@@ -94,7 +89,7 @@ Recompose rather than rename:
 - `16:9`: stage action across left, center, and right; use lateral tracking and negative space.
 - `9:16`: use depth, stacked motion, vertical reveals, and interface-safe placement.
 
-Theme, ratio, duration, or style changes require a fresh visual balance check. A global change invalidates prior approval.
+Theme, ratio, or duration changes require a fresh visual balance check. Style stays 2B. A global change invalidates prior approval.
 
 ## Final check
 

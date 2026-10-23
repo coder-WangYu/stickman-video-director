@@ -1,0 +1,4 @@
+interface:
+  display_name: "Stickman Videos Dongyu"
+  short_description: "Dongyu stickman Omni Flash video prompts"
+  default_prompt: "Use $stickman-videos-dongyu to turn this copy into a one-minute English stickman video prompt package."

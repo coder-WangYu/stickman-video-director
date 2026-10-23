@@ -1,15 +1,18 @@
 ---
-name: directing-stickman-videos
-description: "Use when turning copy, notes, articles, or topics into customizable-length English stick-figure videos (in 10-second multiples: 30s, 60s, 3min, 5min, default 60s), kinetic line-animation explainers, motivational shorts, or Gemini Omni Flash prompt packages. Default output is visuals-only (no voiceover / narration / dubbing)."
+name: stickman-videos-dongyu
+description: "Use stickman-videos-dongyu (Dongyu) when turning copy, notes, articles, or topics into customizable-length English stick-figure videos (in 10-second multiples: 30s, 60s, 3min, 5min, default 60s), kinetic line-animation explainers, motivational shorts, or Gemini Omni Flash prompt packages. Phase A includes English VO script text (plus user-language reference translation); Phase B generation prompts stay visuals-only (no spoken audio / dubbing)."
 ---
 
-# Directing Stickman Videos
+# Stickman Videos Dongyu
 
 ## Core contract
 
 Turn one source into a confirmed director's proposal and then N standalone prompts for approximately ten-second Gemini Omni Flash clips (where N = target duration in seconds / 10; default 6 clips for 60 seconds). Preserve the source's meaning while structuring it through a high-completion 5-stage emotional narrative arc.
 
-**Default audio policy (this fork):** visuals-only. Do **not** write English VO, narrator voice profiles, spoken dialogue, or dubbing instructions. Do **not** apply `references/voice-continuity.md` unless the user explicitly asks to restore voiceover. Optional ambient BGM/SFX for picture rhythm is allowed; spoken words are not.
+**Default audio / copy policy (this fork):**
+- **Phase A (like upstream):** include the full **English VO / 旁白文案 as plain text**, with a reference translation in the user's language, scaled to ~20–25 English words per 10-second clip. This narration text is required for planning and user approval.
+- **Phase B (this fork):** generation prompts stay **visuals-only / mute speech**. Do **not** put spoken VO lines, narrator voice profiles, lip-sync speech, dialogue, or dubbing into Omni Flash prompts unless the user explicitly asks to restore voiceover into generation (then apply `references/voice-continuity.md`).
+- Optional ambient BGM/SFX for picture rhythm is allowed in prompts; spoken words are not (by default). Narration text approved in Phase A is for humans / later post-production VO, not for the video model by default.
 
 ## Setup gate
 
@@ -33,11 +36,11 @@ Urgency, generation cost, client pressure, and requests to "pick normal settings
 
 ## Workflow
 
-1. Read `references/storyboard-template.md` and `references/style-catalog.md`. Structure the narrative using the **5-Stage High-Completion Heartbeat Engine** (Golden Hook → Disrupting Assumptions → Unveiling Insider Secrets → Ultimate Truth Revelation → Elevation & Interactive Discussion), with timing dynamically scaled to the target duration. Produce Phase A in the user's language as a **visual** director proposal (no VO script, no voice casting).
-2. Stop after the director's proposal and request explicit approval.
-3. If the user changes ratio, duration, style, theme, scene structure, or global direction, recompose Phase A and request approval again.
-4. Only after approval of the current Phase A, read `references/omni-flash-prompt-contract.md` and produce Phase B (visual prompts only; mute speech).
-5. Use `references/examples.md` only when a concrete end-to-end example would resolve ambiguity. When citing examples, strip or ignore their VO/voice blocks unless the user restored voiceover.
+1. Read `references/storyboard-template.md` and `references/style-catalog.md`. Structure the narrative using the **5-Stage High-Completion Heartbeat Engine** (Golden Hook → Disrupting Assumptions → Unveiling Insider Secrets → Ultimate Truth Revelation → Elevation & Interactive Discussion), with timing dynamically scaled to the target duration. Produce Phase A in the user's language **with English VO script text and a reference translation** (original Phase A narration content). Do **not** require narrator voice casting for generation by default.
+2. Stop after the director's proposal and request explicit approval of Phase A (including the VO/旁白文案).
+3. If the user changes ratio, duration, style, theme, narration, scene structure, or global direction, recompose Phase A and request approval again.
+4. Only after approval of the current Phase A, read `references/omni-flash-prompt-contract.md` and produce Phase B (**visual prompts only; mute speech by default**). Use the approved VO text to keep visual beats aligned, and for optional post-production overlay notes—but do **not** inject spoken VO into generation prompts unless voiceover-into-generation was restored.
+5. Use `references/examples.md` only when a concrete end-to-end example would resolve ambiguity. When citing examples for Phase B, strip their spoken voice blocks unless the user restored voiceover into generation.
 
 Topic approval, schedule pressure, or approval of an older draft is not approval of the current Phase A.
 
@@ -47,15 +50,16 @@ For Style 3, read `references/prehistoric-dark-comedy.md` before planning. Its c
 
 For Style 4, read `references/cozy-storytelling.md` before planning and prompt assembly. Default each new ten-second segment to a different recognizable story setting, unless the user explicitly requests one location or approves a deliberate return. Preserve characters, drawing grammar, important props and movement direction—not an identical table or background across the whole video. Name the location cuts and any time jumps in Phase A. This is full-color cartoon storytelling, not a hand-drawn/sketchbook mode and not a claim of photorealistic 3D backgrounds.
 
-For Style 5, read `references/historical-cartoon.md` before planning and prompt assembly. Keep its drawing grammar fixed while changing the era pack. Confirm story-specific cast cards, setting, palette and props in Phase A; repeat the full approved style and visible cast descriptions in every Phase B prompt. Its historical palette, physical-action pacing and story ending override generic three-color, device-count, no-idle and discussion-ending rules below. Do not apply this style's character rules to Styles 1–4. Skip its narration/voice requirements under the default visuals-only policy.
+For Style 5, read `references/historical-cartoon.md` before planning and prompt assembly. Keep its drawing grammar fixed while changing the era pack. Confirm story-specific cast cards, setting, palette, props and **exact narration text** in Phase A; repeat the full approved style and visible cast descriptions in every Phase B prompt. Its historical palette, physical-action pacing and story ending override generic three-color, device-count, no-idle and discussion-ending rules below. Do not apply this style's character rules to Styles 1–4. Still omit spoken voice blocks from Phase B prompts under the default mute-generation policy.
 
 - Structure every script using the 5-stage high-completion flow:
   1. **Golden Hook**: Instant curiosity trigger via a counter-intuitive question or visual paradox. Timing is flexible based on duration (e.g. within the first 2–5 seconds in short videos, up to 10–15s in long videos); never open with generic platitudes.
   2. **Disrupting Assumptions**: State what everyone thinks is true, then shatter it in one sentence to build cognitive conflict.
   3. **Unveiling Insider Secrets**: Pull back the curtain on hidden mechanics, counter-intuitive details, or the real obstacle.
   4. **Ultimate Truth Revelation**: Deliver the underlying business logic or human psychology truth with maximum cognitive payoff.
-  5. **Elevation & High-Engagement Discussion**: Conclude with a memorable punchline and an irresistible discussion prompt that sparks debate in the comments (express as visual CTA / end card idea in planning notes; do not put spoken lines into generation prompts).
-- Do **not** scale or write English VO word counts. Carry story meaning only through timed visuals and optional post-production overlay notes.
+  5. **Elevation & High-Engagement Discussion**: Conclude with a memorable punchline and an irresistible discussion prompt that sparks debate in the comments (include it in Phase A VO text; do not put spoken lines into Phase B generation prompts).
+- Scale English VO word count in Phase A to approximately 20–25 words per 10-second clip across N clips (e.g. ~60–75 words for 30s / 3 clips, ~120–150 words for 60s / 6 clips, ~360–450 words for 3min / 18 clips, ~600–750 words for 5min / 30 clips). Keep a reference translation in the user's language.
+- Phase B must **not** re-introduce spoken VO or narrator voice blocks into generation prompts. Carry on-screen action through timed visuals; optional post-production overlay notes may echo short phrases from the approved Phase A VO.
 - Give each clip three timed beats, at least four relevant visual devices, and a visual change every two to three seconds.
 - Keep character proportions, line weight, and style consistent across all clips.
 - For Style 1, freeze the concise character anchor from `references/style-catalog.md` and repeat it verbatim in every clip. Keep two arms and two legs, one current pose per limb, stable proportions and uniform medium line weight; a moving arm replaces its previous pose rather than adding another arm. Keep the figure monochrome and saturated accents on props/graphics. Do not replace the anchor with "same character", ellipses, numeric anatomy recipes, skeleton/path instructions or clip-specific appearance descriptions. Occasional simple line expressions are allowed; the head remains hollow. Keep rich actions and effects separate from character design. Treat generated consistency as a visual acceptance check, not a guarantee from repeated text.

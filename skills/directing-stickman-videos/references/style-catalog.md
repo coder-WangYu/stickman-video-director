@@ -9,8 +9,8 @@ This catalog defines the supported visual styles for `directing-stickman-videos`
 | Style Key | Style Name | Visual Theme | Best For | Character Design |
 |---|---|---|---|---|
 | **Style 1** | Classic Minimalist (Light / Dark) | Pure white or black canvas, monochrome lines, up to 3 saturated accent colors | High-density explainers, pure logic, mental models, fast-paced cognitive concepts | Hollow circle head, single-line body, no clothing, occasional simple line expressions |
-| **Style 2A** | Modern Beanie - Studio Tech (极简科技风) | Pure white high-key studio, subtle light-gray perspective grid, glowing cyan/blue glass UI | Tech tutorials, AI tool breakdowns, career insights, methodology breakthroughs | Red beanie (no pom-pom), yellow t-shirt, black stick limbs, smooth 2D animation |
-| **Style 2B** | Modern Beanie - Cinematic Story (彩色故事风) | Full-color narrative environments, cinematic lighting & depth (warm room, dusk, desert, summit) | Emotional storytelling, personal growth, motivational journeys, narrative hooks | Same red beanie & yellow t-shirt figure staged inside rich environmental lighting |
+| **Style 2A** | Modern Beanie - Studio Tech (极简科技风) | Pure white high-key studio, subtle light-gray perspective grid, glowing cyan/blue glass UI | Tech tutorials, AI tool breakdowns, career insights, methodology breakthroughs | Red beanie, yellow t-shirt, **solid white filled head** + simple expressions, black stick limbs |
+| **Style 2B** | Modern Beanie - Cinematic Story (彩色故事风) | Full-color narrative environments, cinematic lighting & depth (warm room, dusk, desert, summit) | Emotional storytelling, personal growth, motivational journeys, narrative hooks | Same solid-white-head beanie figure inside rich environmental lighting; clip-matched expressions |
 | **Style 3** | Prehistoric Hand-Drawn / Dark Comedy (史前手绘 / 黑色幽默) | Earthy prehistoric environments, warm fire accents, subtle paper texture | Satirical stories, visual analogies, ironic callbacks | White filled heads, expressive cartoon faces, black stick limbs, variable story-specific cast |
 | **Style 4** | Cozy Storytelling (治愈故事风) | Full-color 2D cartoon locations, gentle atmospheric light, varied cinematic shots | Relatable life stories, emotional growth, educational storytelling | White filled round head and slim torso, dark stick limbs, simple expressive face |
 | **Style 5** | Historical Cartoon (历史卡通风) | Full-color painterly historical settings, clean cel shading, era-specific wardrobe and props | History explainers, historical daily life, civilization stories and historical comedy | White filled round heads, simple black oval eyes, thick outlines and thin black stick limbs |
@@ -61,18 +61,25 @@ To prevent character drift, bug-eye deformations, or clothing loss across clips,
 
 **Clip 1 Character Anchor:**
 ```text
-A minimalist 2D animated stick figure wearing a bright red beanie (smooth rounded knit, no pom-pom) and a yellow t-shirt, with simple black stick limbs and shorts. Simple black lines, vibrant colors, smooth 2D animation style.
+A minimalist 2D animated stick figure with a solid opaque white circular head (filled white face plate, thick black outline; never hollow, never transparent, never see-through), simple black-dot cartoon eyes and a simple black-line cartoon mouth that changes expression by clip, wearing a bright red beanie (smooth rounded knit, no pom-pom) and a yellow t-shirt, with simple black stick limbs and shorts, simple oval feet and three-fingered cartoon hands. Simple black lines, vibrant colors, smooth 2D animation style.
 ```
 
-**Subsequent Clips Character Anchor (Clips 2–6):**
+**Subsequent Clips Character Anchor (Clips 2–N):**
 ```text
-The same minimalist 2D animated stick figure in a bright red beanie and yellow shirt... Simple black lines, vibrant colors, smooth 2D animation style.
+The same minimalist 2D animated stick figure with the same solid opaque white circular head (filled white face, thick black outline; never hollow or transparent), bright red beanie and yellow shirt, black stick limbs and shorts... Simple black lines, vibrant colors, smooth 2D animation style.
 ```
 
 **Deformation Prevention Rules:**
-- **No Realistic Facial Features**: Hollow circular head or minimal dot eyes only. Never request detailed pupils, irises, or photorealistic facial contours (which trigger alien bug-eyes).
+**Face & expression rules (Style 2 default):**
+- Head is always a **solid opaque white disk** with a thick black outline under the beanie—never a hollow ring, never transparent, never showing background through the face.
+- Keep facial marks **simple cartoon**: two black dots or short arcs for eyes; mouth as a simple curve, open O, grin with a small white tooth row only when smiling big, frown, grit, etc. No realistic pupils, irises, eyelids, nose, skin pores, or photoreal lips.
+- **Every clip must name one primary expression** matched to that clip's story beat, mood, and environment (e.g. anxious sprint, forced polite smile, curious spark, focused craft, warm pride, playful challenge). Put the expression in both Phase A scene notes and the Phase B prompt's character/action lines.
+- Expression may change across the three timed beats inside a clip if the beat demands it; do not leave a blank/neutral face when the beat is emotional.
+- Expression changes must not redesign head fill, outline thickness, beanie, shirt, limb style, or proportions.
+- Do **not** add tall/chibi/stocky proportion locks unless the user asks; keep the natural beanie stickman silhouette from the frozen anchor.
 - **No Pom-Poms**: Specify smooth rounded beanie top to prevent erratic pom-poms or winter tassels.
 - **Always Include Both Beanie and T-shirt**: Omitting the shirt results in naked stick bodies; omitting the beanie results in standard Style 1 characters.
+- **Anti bug-eye**: never request detailed pupils, irises, eyelashes, or photorealistic facial contours.
 
 ---
 
@@ -113,12 +120,12 @@ in a rich full-color cinematic environment [describe setting: e.g., a dimly lit 
 ```
 
 #### Character & Style Consistency
-- The character remains the same minimalist 2D stick figure in red beanie and yellow shirt.
-- Maintain smooth 2D vector animation aesthetics for the character even within a textured, atmospheric background.
+- The character remains the same minimalist 2D stick figure: solid opaque white circular head, red beanie, yellow shirt, black stick limbs; name a beat-matched expression each clip.
+- Name a beat-matched cartoon expression every clip; keep smooth 2D vector aesthetics for the character even within a textured atmospheric background.
 
 #### Negative Constraints
 ```text
-Negative constraints: no photorealistic human skin or faces, no 3D humanoid CGI uncanny valley models, no chaotic line glitches, no speech bubbles, no dialogue text boxes.
+Negative constraints: no photorealistic human skin, no realistic facial rendering (keep simple cartoon face on solid white head), no hollow/transparent head, no 3D humanoid CGI uncanny valley models, no chaotic line glitches, no speech bubbles, no dialogue text boxes.
 ```
 
 ---

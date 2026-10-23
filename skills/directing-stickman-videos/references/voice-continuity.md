@@ -1,5 +1,9 @@
 # Shared voice continuity — all visual styles
 
+> **This fork default:** voiceover / narration / dubbing is **OFF**. Do not use this file in Phase A or Phase B unless the user explicitly asks to restore spoken VO. Prefer the mute-speech lock in `omni-flash-prompt-contract.md`.
+
+# Shared voice continuity — all visual styles
+
 This is the common voice contract for Style 1 Light/Dark, Style 2A, Style 2B and Style 3, plus Style 4 Cozy Storytelling. Voice identity belongs to the video, not to a visual style or a clip. Different videos may choose different voices; every clip of one video must use the same complete approved voice profile. Do not force every project into the tested male profile.
 
 ## Choose once in Phase A

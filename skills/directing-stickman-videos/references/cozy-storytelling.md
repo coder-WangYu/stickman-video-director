@@ -1,5 +1,8 @@
 # Style 4 — Cozy Storytelling / 治愈故事风
 
+
+> **This fork default:** skip narrator / VO / `voice-continuity.md` requirements unless the user restores voiceover. Keep visual and (optional) ambient music rules.
+
 ## Visual identity
 
 Expressive minimalist characters in full-color 2D cartoon story environments. White filled round heads and slim white torsos contrast with dark stick limbs; the background carries color, atmosphere, gentle light and depth. Use clear cartoon contours and cinematic framing, not crude hand drawing, sketchbook borders, paper overlays or photorealistic/3D human characters. Do not inherit Style 1's hollow-head/no-face/no-filled-body bans or Style 3's animal-hide/cave defaults.

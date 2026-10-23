@@ -1,5 +1,8 @@
 # Style 3 — Prehistoric Hand-Drawn / Dark Comedy
 
+
+> **This fork default:** skip narrator / VO / `voice-continuity.md` requirements unless the user restores voiceover. Keep visual and (optional) ambient music rules.
+
 ## Fixed style, variable cast
 
 Preserve the drawing grammar, not a single default face. Use crude hand-drawn 2D black outlines, white filled round heads, thin black stick limbs, expressive simple cartoon eyes/brows/mouths, animal-hide clothing, earthy ochre/brown scenery and small warm fire accents. Subtle paper texture and irregular outlines belong to this style; no photorealistic skin, glossy 3D characters or modern studio UI. Do not apply Style 1's hollow-head/no-face/no-clothes contract here.

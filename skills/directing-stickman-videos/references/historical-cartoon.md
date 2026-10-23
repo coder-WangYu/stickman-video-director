@@ -1,5 +1,8 @@
 # Style 5 — Historical Cartoon / 历史卡通风
 
+
+> **This fork default:** skip narrator / VO / `voice-continuity.md` requirements unless the user restores voiceover. Keep visual and (optional) ambient music rules.
+
 Historical explainers, daily life, civilization stories and comic historical shorts, using expressive stick figures in colorful historical worlds.
 
 Visual concept and Roman era-pack contribution: [Lawal Ridwan / @leksautomate](https://github.com/leksautomate), via [History Stickman](https://github.com/kaomei/stickman-video-director/pull/41). Adapted to this project's Style 5 with owner-directed cross-era trials. The contributor's PR numbering is not the published style number.

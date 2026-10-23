@@ -1,8 +1,8 @@
 # Director's Proposal Contract
 
-Use this contract for Phase A. Present a readable production proposal (**visual plan + English VO 旁白文案 + user-language reference translation**) and stop for confirmation before writing model prompts. Refer to `references/style-catalog.md` for style specifications.
+Use this contract for Phase A **after** the independent **character lock** step (copy-ready character prompt; text only, no image yet) is approved. Present a readable production proposal (**visual plan + English VO 旁白文案 + user-language reference translation**) and stop for confirmation before writing model prompts. Refer to `references/style-catalog.md` for style specifications.
 
-**Default (this fork):** Phase A **must include** the narration script text (English VO + reference translation), like upstream. Do **not** require narrator voice casting for video generation by default. Spoken audio is omitted from Phase B generation prompts unless the user restores VO into generation (`voice-continuity.md`). Optional ambient BGM/SFX mood may be noted.
+**Default (this fork):** Phase A **must include** the narration script text (English VO + reference translation), like upstream. Reuse the approved character lock; do **not** redefine cast here. Do **not** require narrator voice casting for video generation by default. Spoken audio is omitted from Phase B generation prompts unless the user restores VO into generation (`voice-continuity.md`). Optional ambient BGM/SFX mood may be noted.
 
 For Style 2 (2A/2B), Phase A must note a **solid white filled head** and a **per-clip cartoon expression** in the stick-figure scene column (matched to beat, mood, and environment). Do not plan a hollow/transparent face.
 
@@ -36,6 +36,7 @@ Present these items in order:
 4. English VO word count (~20–25 words × N clips), estimated duration, and a note that **generation stays mute by default** (VO text is for approval / later post VO; no narrator voice casting required unless the user restores VO into generation)
 5. Up to three saturated accent colors (for Style 1) or visual palette/environment mood (for Style 2+), named in ordinary language, and what each represents
 6. Optional ambient BGM/SFX mood (no spoken generation); or state "silent / SFX-only for generation"
+7. Reminder: cast is already locked in the prior character-lock step—cite the approved look; do not redesign
 
 ## Narrative patterns: High-Completion 5-Stage Heartbeat Engine
 
@@ -128,11 +129,11 @@ End each row with a visible interface that the next row inherits: a pose, moving
 
 End Phase A by asking the user to:
 
-- approve the current proposal and generate the N Omni Flash prompts;
+- approve the current proposal (storyboard + English VO + reference translation) and generate the N Omni Flash prompts;
 - revise a named scene or narration passage; or
-- change a global setting such as aspect ratio, duration, style, theme, palette, or tone.
+- change a global setting such as aspect ratio, duration, style, theme, palette, or tone (cast/look changes return to the character-lock step first).
 
-Do not include final model prompts. A global change invalidates approval and requires a revised Phase A.
+Do not include final model prompts. Character lock was already approved before Phase A. A global change invalidates approval and requires a revised Phase A.
 
 ## Phase A checks
 
@@ -143,6 +144,8 @@ Do not include final model prompts. A global change invalidates approval and req
 - Exactly N storyboard rows have distinct narrative purposes (N = duration / 10).
 - Every row has three beats, at least four visual devices, English VO, reference translation, and a transition.
 - Phase A notes that Phase B generation stays mute by default (VO text is not spoken into Omni Flash unless restored).
+- Approved character lock from the prior independent step is cited; Phase A does not redesign cast.
+- Phase B does not yet require generating or citing a character reference image in Flow prompts.
 - Visual change occurs approximately every two to three seconds.
 - No more than three saturated accent colors are used (for Style 1) or clean palette rules followed (for Style 2).
 - No technical color notation is present.

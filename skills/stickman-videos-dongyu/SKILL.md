@@ -1,6 +1,6 @@
 ---
 name: stickman-videos-dongyu
-description: "Use stickman-videos-dongyu (Dongyu) when turning copy, notes, articles, or topics into customizable-length English stick-figure videos (in 10-second multiples: 30s, 60s, 3min, 5min, default 60s), kinetic line-animation explainers, motivational shorts, or Gemini Omni Flash prompt packages. Phase A includes English VO script text (plus user-language reference translation); Phase B generation prompts stay visuals-only (no spoken audio / dubbing)."
+description: "Use stickman-videos-dongyu (Dongyu) when turning copy, notes, articles, or topics into customizable-length English stick-figure videos (in 10-second multiples: 30s, 60s, 3min, 5min, default 60s), kinetic line-animation explainers, motivational shorts, or Gemini Omni Flash prompt packages. After Setup, independently lock cast with a copy-ready character prompt (text only, no image yet); then Phase A (English VO + reference translation); Phase B stays visuals-only (no spoken audio)."
 ---
 
 # Stickman Videos Dongyu
@@ -9,10 +9,12 @@ description: "Use stickman-videos-dongyu (Dongyu) when turning copy, notes, arti
 
 Turn one source into a confirmed director's proposal and then N standalone prompts for approximately ten-second Gemini Omni Flash clips (where N = target duration in seconds / 10; default 6 clips for 60 seconds). Preserve the source's meaning while structuring it through a high-completion 5-stage emotional narrative arc.
 
-**Default audio / copy policy (this fork):**
-- **Phase A (like upstream):** include the full **English VO / 旁白文案 as plain text**, with a reference translation in the user's language, scaled to ~20–25 English words per 10-second clip. This narration text is required for planning and user approval.
+**Default audio / copy / character policy (this fork):**
+- **Character lock (this fork, between Setup and Phase A):** after Setup is complete, produce a **copy-ready character prompt** (one pasteable English block that locks the cast look for image/video tools). This step is **independent of Phase A**—do not bury the character prompt inside the Phase A proposal. **Do not generate a character image in this step** (image lock comes later when asked). Stop for user approval of the **copyable prompt only** before Phase A.
+- **Phase A (like upstream):** include the full **English VO / 旁白文案 as plain text**, with a reference translation in the user's language, scaled to ~20–25 English words per 10-second clip. Use the **already-approved** character prompt as the visual cast; do not redesign the character here.
 - **Phase B (this fork):** generation prompts stay **visuals-only / mute speech**. Do **not** put spoken VO lines, narrator voice profiles, lip-sync speech, dialogue, or dubbing into Omni Flash prompts unless the user explicitly asks to restore voiceover into generation (then apply `references/voice-continuity.md`).
 - Optional ambient BGM/SFX for picture rhythm is allowed in prompts; spoken words are not (by default). Narration text approved in Phase A is for humans / later post-production VO, not for the video model by default.
+- **Do not yet** generate or wire a character reference image into Phase B / Flow—that comes later.
 
 ## Setup gate
 
@@ -36,13 +38,19 @@ Urgency, generation cost, client pressure, and requests to "pick normal settings
 
 ## Workflow
 
-1. Read `references/storyboard-template.md` and `references/style-catalog.md`. Structure the narrative using the **5-Stage High-Completion Heartbeat Engine** (Golden Hook → Disrupting Assumptions → Unveiling Insider Secrets → Ultimate Truth Revelation → Elevation & Interactive Discussion), with timing dynamically scaled to the target duration. Produce Phase A in the user's language **with English VO script text and a reference translation** (original Phase A narration content). Do **not** require narrator voice casting for generation by default.
-2. Stop after the director's proposal and request explicit approval of Phase A (including the VO/旁白文案).
-3. If the user changes ratio, duration, style, theme, narration, scene structure, or global direction, recompose Phase A and request approval again.
-4. Only after approval of the current Phase A, read `references/omni-flash-prompt-contract.md` and produce Phase B (**visual prompts only; mute speech by default**). Use the approved VO text to keep visual beats aligned, and for optional post-production overlay notes—but do **not** inject spoken VO into generation prompts unless voiceover-into-generation was restored.
-5. Use `references/examples.md` only when a concrete end-to-end example would resolve ambiguity. When citing examples for Phase B, strip their spoken voice blocks unless the user restored voiceover into generation.
+1. **Character lock (between Setup and Phase A — independent step; copy-ready prompt only):**
+   - After Setup is complete, output a **single copy-ready character prompt** (English, one fenced code block the user can paste as-is into an image or video tool). Lock roles + look from the chosen style (Style 2 default: solid opaque white circular head, red beanie, yellow tee, black stick limbs/shorts, simple cartoon expression; short chibi proportions). Do **not** write Phase A storyboard or VO here.
+   - Format: one contiguous prompt paragraph (or short labeled blocks if multiple cast members), **no** prose commentary inside the copy block. A one-line label outside the fence is fine (e.g. "角色提示词（可复制）").
+   - **Do not** generate any character reference image in this step.
+   - Show the copyable prompt and **stop for explicit approval**. If rejected, revise the prompt text only; do **not** start Phase A until approved.
+   - Image generation / Flow reference wiring for this prompt comes later when the user asks—not in this step.
+2. Read `references/storyboard-template.md` and `references/style-catalog.md`. Using the **approved character prompt**, structure the narrative with the **5-Stage High-Completion Heartbeat Engine** and produce Phase A in the user's language **with English VO script text and a reference translation**. Reuse the locked character look; do not redesign cast. Do **not** require narrator voice casting for generation by default.
+3. Stop after the director's proposal and request explicit approval of Phase A (storyboard + VO/旁白文案).
+4. If the user changes ratio, duration, style, theme, narration, scene structure, or global direction, recompose Phase A and request approval again. If they change cast/look, return to step 1 (new **copy-ready character prompt** only) before a new Phase A.
+5. Only after the character lock **and** the current Phase A are approved, read `references/omni-flash-prompt-contract.md` and produce Phase B (**visual prompts only; mute speech by default**). Use the approved VO text to keep visual beats aligned—do **not** inject spoken VO into generation prompts unless voiceover-into-generation was restored.
+6. Use `references/examples.md` only when a concrete end-to-end example would resolve ambiguity. When citing examples for Phase B, strip their spoken voice blocks unless the user restored voiceover into generation.
 
-Topic approval, schedule pressure, or approval of an older draft is not approval of the current Phase A.
+Topic approval, schedule pressure, or approval of an older draft is not approval of the current character lock or Phase A. Character-lock approval alone is not Phase A approval.
 
 ## Output rules
 
